@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('echo.urls')),
     path('', include('chat.urls')),
+    path('', include('group_chat.urls')),
 ]
