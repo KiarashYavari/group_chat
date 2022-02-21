@@ -5,7 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy
-from group_chat.models import GroupChat, Member
+from group_chat.models import GroupChat, Member, Message
 from .forms import UserRegisterForm
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
@@ -75,8 +75,10 @@ def leave_chat(request, chat_id):
         return render(request, 'group_chat/404.html')
     
     if chat.creator_id == current_user.id:
-        chat.delete()
-
+        if chat.message_set.all() != None:
+            for msg in chat.message_set.all():
+                msg.delete()
+            
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             f"chat_{chat.group_slug}",
@@ -85,6 +87,7 @@ def leave_chat(request, chat_id):
                 'message': {'type': "delete"}
             }
         )
+        chat.delete()
 
     else:
         Member.objects.filter(group_chat_id=chat.id, user_id=current_user.id).delete()
