@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Create Chat</h5>
                     <p class="card-text">You can create your own group chat here.</p>
-                    <form action="{% url 'chat:create_chat' %}" method="POST" class="form-inline">
+                    <form action="{% url 'group_chat:create_chat' %}" method="POST" class="form-inline">
                         {% csrf_token %}
                         <div class="form-group mr-2 mb-2">
                             <label for="id_group_name" class="sr-only">Group Name</label>
@@ -29,7 +29,7 @@
                     <div class="list-group">
                         <p class="card-text">You can see a list of chats you've joined/created.</p>
                         {% for member in members %}
-                        <a href="{% url 'chat:chat' member.chat.unique_code %}" class="list-group-item list-group-item-action">{{ member.chat.title }}</a>
+                        <a href="{% url 'group_chat:chat' member.group_chat.group_slug %}" class="list-group-item list-group-item-action">{{ member.group_chat.group_name }}</a>
                         {% endfor %}
                     </div>
                 </div>
