@@ -1,6 +1,6 @@
 from django.urls import path
-from .consumers import GroupChat
+from .consumers import GroupChatConsumer
 
 websocket_urlpatterns = [
-    path('ws/group_chat/<slug:group_slug>/',GroupChat.as_asgi()),
+    path('ws/group_chat/<slug:group_slug>/',GroupChatConsumer.as_asgi()),
 ]
