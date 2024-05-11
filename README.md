@@ -1,1 +1,1 @@
- small chat app with Django Channels and Javascript
+ASGI chat app with Python, Django Channels, Javascript, HTML and CSS
